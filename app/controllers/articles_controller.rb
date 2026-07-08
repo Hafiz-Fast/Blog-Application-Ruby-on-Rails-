@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  # index and show for "GET"
   def index
     @articles = Article.all       # Instance Variable
   end
@@ -7,6 +8,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
   end
 
+  # new and create for "CREATE"
   def new
     @article = Article.new
   end
@@ -19,6 +21,29 @@ class ArticlesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  # edit and update for "UPDATE"
+  def edit
+    @article = Article.find(params[:id])
+  end
+
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      redirect_to @article
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  # destroy for "DESTROY"
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    redirect_to root_path, status: :see_other
   end
 
   # Using strong params to restrict access to parameters
