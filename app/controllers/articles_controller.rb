@@ -1,4 +1,6 @@
 class ArticlesController < ApplicationController
+  http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
+
   # index and show for "GET"
   def index
     @articles = Article.all       # Instance Variable
@@ -49,6 +51,6 @@ class ArticlesController < ApplicationController
   # Using strong params to restrict access to parameters
   private
     def article_params
-      params.require(:article).permit(:title, :body)
+      params.require(:article).permit(:title, :body, :status)
     end
 end
